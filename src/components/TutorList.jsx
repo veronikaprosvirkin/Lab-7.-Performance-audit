@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import TutorCard from './TutorCard';
 import { useBioClamp } from '../hooks/useBioClamp';
+import { useMemo } from 'react';
 
 export default function TutorList({
   tutors,
@@ -13,16 +14,18 @@ export default function TutorList({
   const containerRef = useRef(null);
   useBioClamp(containerRef, [tutors]);
 
+  const favoriteIds = useMemo(() => new Set(favorites), [favorites]);
+
   return (
     <div className="tutor-grid" ref={containerRef} style={style}>
       {tutors.map((tutor) => (
         <TutorCard
           key={tutor.id}
           tutor={tutor}
-          isFavorite={favorites.includes(tutor.id)}
+          isFavorite={favoriteIds.has(tutor.id)}
           isSelected={tutor.id === selectedId}
-          onSelect={() => onSelect(tutor.id)}
-          onToggleFavorite={() => onToggleFavorite(tutor.id)}
+          onSelect= {onSelect}
+          onToggleFavorite={onToggleFavorite}
         />
       ))}
     </div>

@@ -73,7 +73,7 @@ const toggleFavorite = useCallback((id) => {
               tutors={visible}
               favorites={favorites}
               selectedId={selectedId}
-              onSelect={(id) => setSelectedId(id)}
+              onSelect={setSelectedId}
               onToggleFavorite={toggleFavorite}
               style={{ marginTop: 16 }}
             />
