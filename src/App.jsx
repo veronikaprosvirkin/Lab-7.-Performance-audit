@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useDeferredValue } from 'react';
 import { tutors } from './data/tutors';
 import { getVisibleTutors } from './utils/catalog';
 import { useReferenceData } from './hooks/useReferenceData';
@@ -21,6 +21,7 @@ export const DEFAULT_FILTERS = {
 
 export default function App() {
   const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [sortBy, setSortBy] = useState('recommended');
   const [selectedId, setSelectedId] = useState(null);
@@ -29,8 +30,8 @@ export default function App() {
   const reference = useReferenceData();
 
   const visible = useMemo(
-  () => getVisibleTutors(tutors, { query, filters, sortBy }),
-  [query, filters, sortBy]
+  () => getVisibleTutors(tutors, { query: deferredQuery, filters, sortBy }),
+  [deferredQuery, filters, sortBy]
 );
 
 const selected = useMemo(
