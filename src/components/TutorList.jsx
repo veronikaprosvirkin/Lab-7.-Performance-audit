@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import TutorCard from './TutorCard';
-import { useBioClamp } from '../hooks/useBioClamp';
 import { useMemo } from 'react';
 
 export default function TutorList({
@@ -12,7 +11,6 @@ export default function TutorList({
   style,
 }) {
   const containerRef = useRef(null);
-  useBioClamp(containerRef, [tutors]);
 
   const favoriteIds = useMemo(() => new Set(favorites), [favorites]);
 
