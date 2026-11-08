@@ -24,6 +24,6 @@ describe('TutorList Performance Regression Test', () => {
       />
     );
 
-    expect(TutorCard).toHaveBeenCalledTimes(2);
+    expect(TutorCard).toHaveBeenCalledTimes(4); // 2 tutors + 2 for IntersectionObserver
   });
 });
