@@ -76,7 +76,6 @@ const toggleFavorite = useCallback((id) => {
               selectedId={selectedId}
               onSelect={setSelectedId}
               onToggleFavorite={toggleFavorite}
-              style={{ marginTop: 16 }}
             />
           )}
         </section>

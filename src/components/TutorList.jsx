@@ -1,7 +1,7 @@
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useState, useEffect, memo } from 'react';
 import TutorCard from './TutorCard';
 
-export default function TutorList({
+function TutorList({
   tutors,
   favorites,
   selectedId,
@@ -38,7 +38,7 @@ export default function TutorList({
   const visibleTutors = tutors.slice(0, visibleCount);
 
   return (
-    <div className="tutor-grid" ref={containerRef} style={style}>
+    <div className="tutor-grid" ref={containerRef}>
       {visibleTutors.map((tutor) => (
         <TutorCard
           key={tutor.id}
@@ -55,3 +55,4 @@ export default function TutorList({
     </div>
   );
 }
+export default memo(TutorList);
