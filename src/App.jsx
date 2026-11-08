@@ -48,6 +48,14 @@ const toggleFavorite = useCallback((id) => {
     setSelectedId(null);
   };
 
+  const handleFilterChange = useCallback((patch) => {
+    setFilters((prev) => ({ ...prev, ...patch }));
+  }, []);
+
+  const handleFilterReset = useCallback(() => {
+    setFilters(DEFAULT_FILTERS);
+  }, []);
+
   return (
     <div className="app">
       <Header favoritesCount={favorites.length} total={tutors.length} />
@@ -56,8 +64,8 @@ const toggleFavorite = useCallback((id) => {
           filters={filters}
           reference={reference}
           tutors={tutors}
-          onChange={(patch) => setFilters({ ...filters, ...patch })}
-          onReset={() => setFilters(DEFAULT_FILTERS)}
+          onChange={handleFilterChange}
+          onReset={handleFilterReset}
         />
         <section className="results">
           <SearchBar
