@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo} from 'react';
 import RatingStars from './RatingStars';
 import { averageRating, weightedRating } from '../utils/rating';
 import { formatPrice, formatDate, pluralize, FORMAT_LABELS } from '../utils/format';
@@ -13,7 +13,9 @@ export default function TutorDetails({ tutor, isFavorite, onToggleFavorite, onCl
   }, [onClose]);
 
   const rating = averageRating(tutor.reviews);
-  const recent = [...tutor.reviews].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
+  const recent = useMemo(() => {
+    return [...tutor.reviews].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
+  }, [tutor.reviews]);
 
   return (
     <div className="drawer" role="dialog" aria-modal="true" aria-label={tutor.name}>
