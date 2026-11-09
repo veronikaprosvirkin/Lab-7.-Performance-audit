@@ -38,7 +38,7 @@ function TutorList({
   const visibleTutors = tutors.slice(0, visibleCount);
 
   return (
-    <div className="tutor-grid" ref={containerRef}>
+    <div className="tutor-grid" ref={containerRef} style={style}>
       {visibleTutors.map((tutor) => (
         <TutorCard
           key={tutor.id}
