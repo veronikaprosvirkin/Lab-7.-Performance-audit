@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import React from 'react';
 import TutorList from '../components/TutorList';
 import TutorCard from '../components/TutorCard';
 
@@ -7,23 +8,35 @@ vi.mock('../components/TutorCard', () => ({
   default: vi.fn(() => <div data-testid="tutor-card" />),
 }));
 
-describe('TutorList Performance Regression Test', () => {
-  it('коректно передає елементи та формує список репетиторів', () => {
-    const mockTutors = [
-      { id: 1, name: 'Репетитор 1' },
-      { id: 2, name: 'Репетитор 2' },
-    ];
+describe('Regression test: TutorList memoization', () => {
+  it('prevents unnecessary TutorCard re-renders when props remain unchanged', () => {
+    const mockTutors = [{ id: 1, name: 'Тестовий Репетитор', reviews: [], subjects: [] }];
+    const mockFavorites = [];
+    const mockOnSelect = () => {};
+    const mockOnToggleFavorite = () => {};
 
-    render(
+    const { rerender } = render(
       <TutorList
         tutors={mockTutors}
-        favorites={[1]}
+        favorites={mockFavorites}
         selectedId={null}
-        onSelect={() => {}}
-        onToggleFavorite={() => {}}
+        onSelect={mockOnSelect}
+        onToggleFavorite={mockOnToggleFavorite}
       />
     );
 
-    expect(TutorCard).toHaveBeenCalledTimes(4); // 2 tutors + 2 for IntersectionObserver
+    vi.clearAllMocks();
+
+    rerender(
+      <TutorList
+        tutors={mockTutors}
+        favorites={mockFavorites}
+        selectedId={null}
+        onSelect={mockOnSelect}
+        onToggleFavorite={mockOnToggleFavorite}
+      />
+    );
+
+    expect(TutorCard).toHaveBeenCalledTimes(0);
   });
 });
