@@ -7,7 +7,6 @@ function TutorList({
   selectedId,
   onSelect,
   onToggleFavorite,
-  style,
 }) {
   const containerRef = useRef(null);
   const loadMoreRef = useRef(null);
@@ -38,7 +37,7 @@ function TutorList({
   const visibleTutors = tutors.slice(0, visibleCount);
 
   return (
-    <div className="tutor-grid" ref={containerRef} style={style}>
+    <div className="tutor-grid" ref={containerRef}>
       {visibleTutors.map((tutor) => (
         <TutorCard
           key={tutor.id}
